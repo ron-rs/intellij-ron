@@ -1,0 +1,92 @@
+{
+    parserClass = "org.jonahhenriksson.ron.language.parser._RONParser"
+    parserUtilClass = "org.jonahhenriksson.ron.language.psi.RONParserUtil"
+
+    extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix = "RON"
+    psiImplClassSuffix = "Impl"
+    psiPackage = "org.jonahhenriksson.ron.language.psi"
+    psiImplPackage = "org.jonahhenriksson.ron.language.psi.impl"
+
+    elementTypeHolderClass = "org.jonahhenriksson.ron.language.psi.RONTypes"
+    elementTypeClass = "org.jonahhenriksson.ron.language.psi.RONElementType"
+    tokenTypeClass = "org.jonahhenriksson.ron.language.psi.RONTokenType"
+
+    psiImplUtilClass = "org.jonahhenriksson.ron.language.psi.impl.RONPsiImplUtil"
+
+    tokens = [
+        COMMENT = "regexp://.*"
+
+        BOOLEAN = "regexp:true|false"
+
+        IDENT = "regexp:[A-Za-z]+"
+
+        UNSIGNED = "regexp:(0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)"
+        SIGNED = "regexp:[+-](0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)"
+        FLOAT = "regexp:([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)"
+
+        CHAR = "regexp:'([ -&(-\[\]-~])|(\\')|(\\\\)'"
+        STRING = "regexp:\"([ !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\""
+        RAW_STRING = "regexp:r#\"([\s !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"#"
+
+        OPTION = "regexp:Some\s*\(\s*.+\s*\)"
+
+        LIST = "regexp:\[([^,]+(,.+)*,?)?]"
+        MAP = "regexp:\{\s*(.+\s*:\s*.+\s*,?)*}"
+
+        EXTENSION = "regexp:#!\[enable\([A-Za-z]+\)]"
+        PARENTHESISL = "("
+        PARENTHESISR = ")"
+        BRACKETL = "["
+        BRACKETR = "]"
+        BRACEL = "{"
+        BRACER = "}"
+        COLON = ":"
+        COMMA = ","
+        SOME = "Some"
+    ]
+}
+
+// RON File
+RON ::= [extension+] value;
+
+private extension ::= EXTENSION;
+
+private value ::= string | char | bool | struct | tuple | map | list | enum | option | unsigned | signed | float;
+
+// Bool
+private bool ::= BOOLEAN;
+
+// Integer
+private unsigned ::= UNSIGNED;
+private signed ::= SIGNED;
+
+// Float
+private float ::= FLOAT;
+
+// String
+private string ::= RAW_STRING | STRING
+
+// Char
+private char ::= CHAR;
+
+// Option
+private option ::= "Some" "(" value ")";
+
+// List
+private list ::= "[" [value (COMMA value)* [COMMA WS*]] "]";
+
+// Enum
+private enum ::= IDENT tuple;
+
+// Tuple
+private tuple ::= "(" [value (COMMA value)*] ")";
+
+// Map
+private map ::= "{" [map_entry (COMMA map_entry)*  [COMMA WS*]] "}"
+private map_entry ::= value ":" value;
+
+// Struct + Enum
+private struct ::= [IDENT] "(" [named_field (COMMA named_field)* [COMMA]] ")" | IDENT | "(" ")";
+private named_field ::= IDENT ":"value;

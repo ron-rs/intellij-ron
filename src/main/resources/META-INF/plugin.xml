@@ -1,0 +1,17 @@
+<idea-plugin>
+    <id>org.jonahhenriksson.ron</id>
+    <name>RON</name>
+    <vendor>Jonah Henriksson</vendor>
+
+    <description><![CDATA[
+    Currently adds highlighting support for the RON (Rust Object Notation) data format.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="RON file" implementationClass="org.jonahhenriksson.ron.language.RONFileType" fieldName="INSTANCE" language="RON" extensions="ron" />
+        <lang.parserDefinition language="RON" implementationClass="org.jonahhenriksson.ron.language.RONParserDefinition"/>
+        <lang.syntaxHighlighter language="RON" implementationClass="org.jonahhenriksson.ron.language.RONSyntaxHighlighter"/>
+    </extensions>
+</idea-plugin>
