@@ -6,7 +6,7 @@ plugins {
 group 'org.jonahhenriksson'
 version '1.0-SNAPSHOT'
 
-sourceSets.main.java.srcDirs 'src/main/gen';
+sourceSets.main.java.srcDirs 'src/main/gen'
 
 repositories {
     mavenCentral()
@@ -20,5 +20,5 @@ intellij {
     version '2020.2'
 }
 patchPluginXml {
-    changeNotes """Added basic highlighting"""
+    changeNotes """Added basic highlighting support for RON"""
 }
