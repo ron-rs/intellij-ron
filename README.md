@@ -1,6 +1,7 @@
 # RONLangPlugin
 A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
-<iframe frameborder="none" width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/14897"></iframe>
+
+![Marketplace](https://plugins.jetbrains.com/embeddable/install/14897)
 
 ## Contributing
 If there is a specific feature you want to see, or an issue with the plugin, make an issue, and I'll try to get back to it.
