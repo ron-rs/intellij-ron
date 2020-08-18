@@ -1,7 +1,8 @@
 # RONLangPlugin
-A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
+![Marketplace](https://img.shields.io/static/v1?label=&message=Marketplace&labelColor=FFF&color=000&logo=intellij-idea&logoColor=000&link=https://plugins.jetbrains.com/plugin/14897-ron/)
 
-![Marketplace](https://plugins.jetbrains.com/embeddable/install/14897)
+
+A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
 
 ## Contributing
 If there is a specific feature you want to see, or an issue with the plugin, make an issue, and I'll try to get back to it.
