@@ -14,8 +14,4 @@
         <lang.parserDefinition language="RON" implementationClass="org.jonahhenriksson.ron.language.RONParserDefinition"/>
         <lang.syntaxHighlighter language="RON" implementationClass="org.jonahhenriksson.ron.language.RONSyntaxHighlighter"/>
     </extensions>
-
-    <change-notes><![CDATA[
-   Added basic highlighting support for RON
-]]></change-notes>
 </idea-plugin>

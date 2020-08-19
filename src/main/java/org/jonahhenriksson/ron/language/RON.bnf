@@ -20,7 +20,7 @@
 
         BOOLEAN = "regexp:true|false"
 
-        IDENT = "regexp:[A-Za-z]+"
+        IDENT = "regexp:[A-Za-z_]+"
 
         UNSIGNED = "regexp:(0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)"
         SIGNED = "regexp:[+-](0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)"

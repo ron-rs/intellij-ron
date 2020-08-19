@@ -27,7 +27,7 @@ WHITE_SPACE=\s+
 
 COMMENT="//".*
 BOOLEAN=true|false
-IDENT=[A-Za-z]+
+IDENT=[A-Za-z_]+
 UNSIGNED=(0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)
 SIGNED=[+-](0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)
 FLOAT=([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
