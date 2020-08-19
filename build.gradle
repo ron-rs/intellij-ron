@@ -20,7 +20,7 @@ intellij {
     version '2020.2'
 }
 patchPluginXml {
-    changeNotes """Added basic highlighting support for RON"""
+    changeNotes """Fixed identifiers to include underscores"""
 }
 
 publishPlugin {
