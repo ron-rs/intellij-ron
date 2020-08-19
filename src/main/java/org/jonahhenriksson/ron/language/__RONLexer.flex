@@ -34,15 +34,13 @@ FLOAT=([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 CHAR='([ -&(-\[\]-~])|(\')|(\\\\)'
 STRING=\"([ !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"
 RAW_STRING=r#\"([\s !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"#
-OPTION=Some[ \t\n\x0B\f\r]*\([ \t\n\x0B\f\r]*.+[ \t\n\x0B\f\r]*\)
-LIST=\[([^,]+(,.+)*,?)?]
-MAP=\{[ \t\n\x0B\f\r]*(.+[ \t\n\x0B\f\r]*:[ \t\n\x0B\f\r]*.+[ \t\n\x0B\f\r]*,?)*}
-EXTENSION=#!\[enable\([A-Za-z]+\)]
+EXTENSION=#!\[enable\([A-Za-z_]+\)\]
 
 %%
 <YYINITIAL> {
   {WHITE_SPACE}      { return WHITE_SPACE; }
 
+  "Some"             { return SOME; }
   "("                { return PARENTHESISL; }
   ")"                { return PARENTHESISR; }
   "["                { return BRACKETL; }
@@ -51,8 +49,6 @@ EXTENSION=#!\[enable\([A-Za-z]+\)]
   "}"                { return BRACER; }
   ":"                { return COLON; }
   ","                { return COMMA; }
-  "Some"             { return SOME; }
-  "WS"               { return WS; }
 
   {COMMENT}          { return COMMENT; }
   {BOOLEAN}          { return BOOLEAN; }
@@ -63,9 +59,6 @@ EXTENSION=#!\[enable\([A-Za-z]+\)]
   {CHAR}             { return CHAR; }
   {STRING}           { return STRING; }
   {RAW_STRING}       { return RAW_STRING; }
-  {OPTION}           { return OPTION; }
-  {LIST}             { return LIST; }
-  {MAP}              { return MAP; }
   {EXTENSION}        { return EXTENSION; }
 
 }

@@ -30,12 +30,9 @@
         STRING = "regexp:\"([ !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\""
         RAW_STRING = "regexp:r#\"([\s !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"#"
 
-        OPTION = "regexp:Some\s*\(\s*.+\s*\)"
+        SOME = "Some"
 
-        LIST = "regexp:\[([^,]+(,.+)*,?)?]"
-        MAP = "regexp:\{\s*(.+\s*:\s*.+\s*,?)*}"
-
-        EXTENSION = "regexp:#!\[enable\([A-Za-z]+\)]"
+        EXTENSION = "regexp:#!\[enable\([A-Za-z_]+\)\]"
         PARENTHESISL = "("
         PARENTHESISR = ")"
         BRACKETL = "["
@@ -72,21 +69,21 @@ private string ::= RAW_STRING | STRING
 private char ::= CHAR;
 
 // Option
-private option ::= "Some" "(" value ")";
+private option ::= SOME PARENTHESISL value PARENTHESISR;
 
 // List
-private list ::= "[" [value (COMMA value)* [COMMA WS*]] "]";
+private list ::= BRACKETL [value (COMMA value)* [COMMA]] BRACKETR;
 
 // Enum
 private enum ::= IDENT tuple;
 
 // Tuple
-private tuple ::= "(" [value (COMMA value)*] ")";
+private tuple ::= PARENTHESISL [value (COMMA value)*] PARENTHESISR;
 
 // Map
-private map ::= "{" [map_entry (COMMA map_entry)*  [COMMA WS*]] "}"
-private map_entry ::= value ":" value;
+private map ::= BRACEL [map_entry (COMMA map_entry)*  [COMMA]] BRACER
+private map_entry ::= value COLON value;
 
 // Struct + Enum
-private struct ::= [IDENT] "(" [named_field (COMMA named_field)* [COMMA]] ")" | IDENT | "(" ")";
-private named_field ::= IDENT ":"value;
+private struct ::= [IDENT] PARENTHESISL [named_field (COMMA named_field)* [COMMA]] PARENTHESISR | IDENT | PARENTHESISL PARENTHESISR;
+private named_field ::= IDENT COLON value;

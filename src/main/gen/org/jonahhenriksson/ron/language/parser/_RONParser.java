@@ -107,7 +107,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "[" [value (COMMA value)* [COMMA WS*]] "]"
+  // BRACKETL [value (COMMA value)* [COMMA]] BRACKETR
   static boolean list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list")) return false;
     if (!nextTokenIs(b, BRACKETL)) return false;
@@ -120,14 +120,14 @@ public class _RONParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [value (COMMA value)* [COMMA WS*]]
+  // [value (COMMA value)* [COMMA]]
   private static boolean list_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list_1")) return false;
     list_1_0(b, l + 1);
     return true;
   }
 
-  // value (COMMA value)* [COMMA WS*]
+  // value (COMMA value)* [COMMA]
   private static boolean list_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list_1_0")) return false;
     boolean r;
@@ -161,37 +161,15 @@ public class _RONParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [COMMA WS*]
+  // [COMMA]
   private static boolean list_1_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list_1_0_2")) return false;
-    list_1_0_2_0(b, l + 1);
-    return true;
-  }
-
-  // COMMA WS*
-  private static boolean list_1_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "list_1_0_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && list_1_0_2_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // WS*
-  private static boolean list_1_0_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "list_1_0_2_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!consumeToken(b, WS)) break;
-      if (!empty_element_parsed_guard_(b, "list_1_0_2_0_1", c)) break;
-    }
+    consumeToken(b, COMMA);
     return true;
   }
 
   /* ********************************************************** */
-  // "{" [map_entry (COMMA map_entry)*  [COMMA WS*]] "}"
+  // BRACEL [map_entry (COMMA map_entry)*  [COMMA]] BRACER
   static boolean map(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map")) return false;
     if (!nextTokenIs(b, BRACEL)) return false;
@@ -204,14 +182,14 @@ public class _RONParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [map_entry (COMMA map_entry)*  [COMMA WS*]]
+  // [map_entry (COMMA map_entry)*  [COMMA]]
   private static boolean map_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_1")) return false;
     map_1_0(b, l + 1);
     return true;
   }
 
-  // map_entry (COMMA map_entry)*  [COMMA WS*]
+  // map_entry (COMMA map_entry)*  [COMMA]
   private static boolean map_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_1_0")) return false;
     boolean r;
@@ -245,37 +223,15 @@ public class _RONParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [COMMA WS*]
+  // [COMMA]
   private static boolean map_1_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_1_0_2")) return false;
-    map_1_0_2_0(b, l + 1);
-    return true;
-  }
-
-  // COMMA WS*
-  private static boolean map_1_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "map_1_0_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && map_1_0_2_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // WS*
-  private static boolean map_1_0_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "map_1_0_2_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!consumeToken(b, WS)) break;
-      if (!empty_element_parsed_guard_(b, "map_1_0_2_0_1", c)) break;
-    }
+    consumeToken(b, COMMA);
     return true;
   }
 
   /* ********************************************************** */
-  // value ":" value
+  // value COLON value
   static boolean map_entry(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_entry")) return false;
     boolean r;
@@ -288,7 +244,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENT ":"value
+  // IDENT COLON value
   static boolean named_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "named_field")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
@@ -301,7 +257,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "Some" "(" value ")"
+  // SOME PARENTHESISL value PARENTHESISR
   static boolean option(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "option")) return false;
     if (!nextTokenIs(b, SOME)) return false;
@@ -332,7 +288,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [IDENT] "(" [named_field (COMMA named_field)* [COMMA]] ")" | IDENT | "(" ")"
+  // [IDENT] PARENTHESISL [named_field (COMMA named_field)* [COMMA]] PARENTHESISR | IDENT | PARENTHESISL PARENTHESISR
   static boolean struct(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct")) return false;
     if (!nextTokenIs(b, "", IDENT, PARENTHESISL)) return false;
@@ -345,7 +301,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [IDENT] "(" [named_field (COMMA named_field)* [COMMA]] ")"
+  // [IDENT] PARENTHESISL [named_field (COMMA named_field)* [COMMA]] PARENTHESISR
   private static boolean struct_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_0")) return false;
     boolean r;
@@ -414,7 +370,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "(" [value (COMMA value)*] ")"
+  // PARENTHESISL [value (COMMA value)*] PARENTHESISR
   static boolean tuple(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tuple")) return false;
     if (!nextTokenIs(b, PARENTHESISL)) return false;
