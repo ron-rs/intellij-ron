@@ -26,8 +26,7 @@
         FLOAT = "regexp:([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)"
 
         CHAR = "regexp:'([ -&(-\[\]-~])|(\\')|(\\\\)'"
-        STRING = "regexp:\"([^\r\n\"]|(\\[^ ]))*\""
-        RAW_STRING = "regexp:r#\"([^\"]|(\\[^ ]))*\"#"
+        STRING = "regexp:\"([^\r\n\"]|(\\[\S]))*\""
 
         EXTENSION = "regexp:#!\[enable\([A-Za-z_]+\)\]"
         PARENTHESISL = "("
@@ -49,10 +48,10 @@ RON ::= [extension+] value;
 private extension ::= EXTENSION;
 
 // Values
-private value ::= bool | integer | float | string | char | option | list | map | named_field | object;
+value ::= bool | integer | float | string | char | option | list | map | named_field | object;
 
 // Bool
-private bool ::= BOOLEAN;
+bool ::= BOOLEAN;
 
 // Integer
 private integer ::= INTEGER;
@@ -61,23 +60,23 @@ private integer ::= INTEGER;
 private float ::= FLOAT;
 
 // String
-private string ::= RAW_STRING | STRING
+private string ::= STRING | RAW_STRING;
 
 // Char
 private char ::= CHAR;
 
 // Option
-private option ::= SOME PARENTHESISL value PARENTHESISR;
+option ::= SOME PARENTHESISL value PARENTHESISR;
 
 // List
-private list ::= BRACKETL [value (COMMA value)* [COMMA]] BRACKETR;
+list ::= BRACKETL [value (COMMA value)* [COMMA]] BRACKETR;
 
 // Map
-private map ::= BRACEL [map_entry (COMMA map_entry)*  [COMMA]] BRACER
-private map_entry ::= value COLON value;
-
-// Tuple + Enum Tuple + Tuple Struct + Struct + Unit Struct + Named Enum
-private object ::= [IDENT] PARENTHESISL [value (COMMA value)* [COMMA]] PARENTHESISR | PARENTHESISL PARENTHESISR | IDENT;
+map ::= BRACEL [map_entry (COMMA map_entry)*  [COMMA]] BRACER
+map_entry ::= value COLON value;
 
 // Named Field for Struct
-private named_field ::= IDENT COLON value;
+named_field ::= IDENT COLON value;
+
+// Tuple + Enum Tuple + Tuple Struct + Struct + Unit Struct + Named Enum
+object ::= [IDENT] PARENTHESISL [value (COMMA value)* [COMMA]] PARENTHESISR | PARENTHESISL PARENTHESISR | IDENT;

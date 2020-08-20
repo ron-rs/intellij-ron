@@ -15,11 +15,33 @@ import static org.jonahhenriksson.ron.language.psi.RONTypes.*;
   }
 %}
 
+%{
+  private int zzShaStride = -1;
+
+  private int zzPostponedMarkedPos = -1;
+%}
+
+%{
+  IElementType imbueRawLiteral() {
+    yybegin(YYINITIAL);
+
+    zzStartRead = zzPostponedMarkedPos;
+    zzShaStride = -1;
+    zzPostponedMarkedPos = -1;
+
+    return RAW_STRING;
+  }
+%}
+
 %public
 %class __RONLexer
 %implements FlexLexer
 %function advance
 %type IElementType
+
+%s IN_RAW_STRING
+%s IN_RAW_STRING_SUFFIX
+
 %unicode
 
 EOL=\R
@@ -31,8 +53,7 @@ IDENT=[A-Za-z_]+
 INTEGER=[+-]?((0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*))
 FLOAT=([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 CHAR='([ -&(-\[\]-~])|(\')|(\\\\)'
-STRING=\"([^\r\n\"]|(\\[^ ]))*\"
-RAW_STRING=r#\"([^\"]|(\\[^ ]))*\"#
+STRING=\"([^\r\n\"]|(\\[\S]))*\"
 EXTENSION=#!\[enable\([A-Za-z_]+\)\]
 
 %%
@@ -49,6 +70,12 @@ EXTENSION=#!\[enable\([A-Za-z_]+\)\]
   ","                { return COMMA; }
   "Some"             { return SOME; }
 
+  "r" #* \"          {
+                        yybegin(IN_RAW_STRING);
+                        zzPostponedMarkedPos = zzStartRead;
+                        zzShaStride = yylength() - 2;
+                     }
+
   {COMMENT}          { return COMMENT; }
   {BOOLEAN}          { return BOOLEAN; }
   {IDENT}            { return IDENT; }
@@ -56,9 +83,28 @@ EXTENSION=#!\[enable\([A-Za-z_]+\)\]
   {FLOAT}            { return FLOAT; }
   {CHAR}             { return CHAR; }
   {STRING}           { return STRING; }
-  {RAW_STRING}       { return RAW_STRING; }
   {EXTENSION}        { return EXTENSION; }
 
+}
+
+<IN_RAW_STRING> {
+  \" #* {
+    int shaExcess = yylength() - 1 - zzShaStride;
+    if (shaExcess >= 0) {
+      yybegin(IN_RAW_STRING_SUFFIX);
+      yypushback(shaExcess);
+    }
+  }
+
+  [^] { }
+  <<EOF>>   {
+    return imbueRawLiteral();
+  }
+}
+
+<IN_RAW_STRING_SUFFIX> {
+  [^]       { yypushback(1); return imbueRawLiteral(); }
+  <<EOF>>   { return imbueRawLiteral(); }
 }
 
 [^] { return BAD_CHARACTER; }

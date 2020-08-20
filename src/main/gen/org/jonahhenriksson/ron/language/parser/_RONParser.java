@@ -71,8 +71,14 @@ public class _RONParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BOOLEAN
-  static boolean bool(PsiBuilder b, int l) {
-    return consumeToken(b, BOOLEAN);
+  public static boolean bool(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "bool")) return false;
+    if (!nextTokenIs(b, BOOLEAN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, BOOLEAN);
+    exit_section_(b, m, BOOL, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -101,7 +107,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BRACKETL [value (COMMA value)* [COMMA]] BRACKETR
-  static boolean list(PsiBuilder b, int l) {
+  public static boolean list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list")) return false;
     if (!nextTokenIs(b, BRACKETL)) return false;
     boolean r;
@@ -109,7 +115,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, BRACKETL);
     r = r && list_1(b, l + 1);
     r = r && consumeToken(b, BRACKETR);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, LIST, r);
     return r;
   }
 
@@ -163,7 +169,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // BRACEL [map_entry (COMMA map_entry)*  [COMMA]] BRACER
-  static boolean map(PsiBuilder b, int l) {
+  public static boolean map(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map")) return false;
     if (!nextTokenIs(b, BRACEL)) return false;
     boolean r;
@@ -171,7 +177,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, BRACEL);
     r = r && map_1(b, l + 1);
     r = r && consumeToken(b, BRACER);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, MAP, r);
     return r;
   }
 
@@ -225,41 +231,41 @@ public class _RONParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // value COLON value
-  static boolean map_entry(PsiBuilder b, int l) {
+  public static boolean map_entry(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "map_entry")) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, MAP_ENTRY, "<map entry>");
     r = value(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && value(b, l + 1);
-    exit_section_(b, m, null, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
   // IDENT COLON value
-  static boolean named_field(PsiBuilder b, int l) {
+  public static boolean named_field(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "named_field")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, IDENT, COLON);
     r = r && value(b, l + 1);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, NAMED_FIELD, r);
     return r;
   }
 
   /* ********************************************************** */
   // [IDENT] PARENTHESISL [value (COMMA value)* [COMMA]] PARENTHESISR | PARENTHESISL PARENTHESISR | IDENT
-  static boolean object(PsiBuilder b, int l) {
+  public static boolean object(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object")) return false;
-    if (!nextTokenIs(b, "", IDENT, PARENTHESISL)) return false;
+    if (!nextTokenIs(b, "<object>", IDENT, PARENTHESISL)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, OBJECT, "<object>");
     r = object_0(b, l + 1);
     if (!r) r = parseTokens(b, 0, PARENTHESISL, PARENTHESISR);
     if (!r) r = consumeToken(b, IDENT);
-    exit_section_(b, m, null, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -333,7 +339,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // SOME PARENTHESISL value PARENTHESISR
-  static boolean option(PsiBuilder b, int l) {
+  public static boolean option(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "option")) return false;
     if (!nextTokenIs(b, SOME)) return false;
     boolean r;
@@ -341,29 +347,32 @@ public class _RONParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, SOME, PARENTHESISL);
     r = r && value(b, l + 1);
     r = r && consumeToken(b, PARENTHESISR);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, OPTION, r);
     return r;
   }
 
   /* ********************************************************** */
-  // RAW_STRING | STRING
+  // RAW_STRING
+  static boolean raw_string(PsiBuilder b, int l) {
+    return consumeToken(b, RAW_STRING);
+  }
+
+  /* ********************************************************** */
+  // STRING
   static boolean string(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "string")) return false;
-    if (!nextTokenIs(b, "", RAW_STRING, STRING)) return false;
-    boolean r;
-    r = consumeToken(b, RAW_STRING);
-    if (!r) r = consumeToken(b, STRING);
-    return r;
+    return consumeToken(b, STRING);
   }
 
   /* ********************************************************** */
-  // bool | integer | float | string | char | option | list | map | named_field | object
-  static boolean value(PsiBuilder b, int l) {
+  // bool | integer | float | raw_string | string | char | option | list | map | named_field | object
+  public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
+    Marker m = enter_section_(b, l, _NONE_, VALUE, "<value>");
     r = bool(b, l + 1);
     if (!r) r = integer(b, l + 1);
     if (!r) r = float_$(b, l + 1);
+    if (!r) r = raw_string(b, l + 1);
     if (!r) r = string(b, l + 1);
     if (!r) r = char_$(b, l + 1);
     if (!r) r = option(b, l + 1);
@@ -371,6 +380,7 @@ public class _RONParser implements PsiParser, LightPsiParser {
     if (!r) r = map(b, l + 1);
     if (!r) r = named_field(b, l + 1);
     if (!r) r = object(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

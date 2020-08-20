@@ -13,6 +13,7 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jonahhenriksson.ron.language.parser._RONParser;
+import org.jonahhenriksson.ron.language.psi.RONElementType;
 import org.jonahhenriksson.ron.language.psi.RONFile;
 import org.jonahhenriksson.ron.language.psi.RONTypes;
 
@@ -48,13 +49,9 @@ public class RONParserDefinition implements ParserDefinition {
         return STRING_LITERALS;
     }
 
-    public @NotNull TokenSet getWhiteSpaces() {
-        return WHITE_SPACES;
-    }
-
     @Override
     public @NotNull PsiElement createElement(ASTNode node) {
-        return node.getPsi();
+        return RONTypes.Factory.createElement(node);
     }
 
     @Override
