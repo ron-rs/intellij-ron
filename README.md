@@ -3,6 +3,8 @@
 
 A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
 
+Version 1.1 stabilizes the plugin. 1.0 had a ton of issues, and is not recommended.
+
 ## Contributing
 If there is a specific feature you want to see, or an issue with the plugin, make an issue, and I'll try to get back to it.
 If you want to add a feature or resolve an issue, first let me know by replying to a feature request or issue report, and then make a pull request.
