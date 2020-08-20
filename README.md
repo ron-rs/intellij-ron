@@ -5,8 +5,11 @@ A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
 
 ## Versions
 1.2 - Adds context menu option for creating RON files
+
 1.1 - Fixes issues with recognizing types, and allows raw strings to work properly
+
 1.0 - Allows underscores in identifiers and extensions, and fixed maps and lists
+
 1.0-SNAPSHOT - Initial release, very buggy, but adds basic support for highlighting RON files
 
 ## Contributing
