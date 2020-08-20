@@ -28,19 +28,17 @@ WHITE_SPACE=\s+
 COMMENT="//".*
 BOOLEAN=true|false
 IDENT=[A-Za-z_]+
-UNSIGNED=(0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)
-SIGNED=[+-](0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)
+INTEGER=[+-]?((0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*))
 FLOAT=([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 CHAR='([ -&(-\[\]-~])|(\')|(\\\\)'
-STRING=\"([ !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"
-RAW_STRING=r#\"([\s !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"#
+STRING=\"([^\r\n\"]|(\\[^ ]))*\"
+RAW_STRING=r#\"([^\"]|(\\[^ ]))*\"#
 EXTENSION=#!\[enable\([A-Za-z_]+\)\]
 
 %%
 <YYINITIAL> {
   {WHITE_SPACE}      { return WHITE_SPACE; }
 
-  "Some"             { return SOME; }
   "("                { return PARENTHESISL; }
   ")"                { return PARENTHESISR; }
   "["                { return BRACKETL; }
@@ -49,12 +47,12 @@ EXTENSION=#!\[enable\([A-Za-z_]+\)\]
   "}"                { return BRACER; }
   ":"                { return COLON; }
   ","                { return COMMA; }
+  "Some"             { return SOME; }
 
   {COMMENT}          { return COMMENT; }
   {BOOLEAN}          { return BOOLEAN; }
   {IDENT}            { return IDENT; }
-  {UNSIGNED}         { return UNSIGNED; }
-  {SIGNED}           { return SIGNED; }
+  {INTEGER}          { return INTEGER; }
   {FLOAT}            { return FLOAT; }
   {CHAR}             { return CHAR; }
   {STRING}           { return STRING; }

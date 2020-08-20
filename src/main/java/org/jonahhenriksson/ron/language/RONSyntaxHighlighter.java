@@ -20,7 +20,8 @@ public class RONSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey BOOLEAN = TextAttributesKey.createTextAttributesKey("RON_BOOLEAN", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("RON_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey("RON_STRING", DefaultLanguageHighlighterColors.STRING);
-    public static final TextAttributesKey EXTENSION = TextAttributesKey.createTextAttributesKey("RON_EXTENSION", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
+    public static final TextAttributesKey OPTION = TextAttributesKey.createTextAttributesKey("RON_OPTION", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey EXTENSION = TextAttributesKey.createTextAttributesKey("RON_EXTENSION", DefaultLanguageHighlighterColors.METADATA);
     public static final TextAttributesKey IDENT = TextAttributesKey.createTextAttributesKey("RON_IDENT", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey COMMENT = TextAttributesKey.createTextAttributesKey("RON_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     public static final TextAttributesKey BAD_CHAR = TextAttributesKey.createTextAttributesKey("RON_BAD_CHAR", HighlighterColors.BAD_CHARACTER);
@@ -33,6 +34,7 @@ public class RONSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] BOOLEAN_KEYS = new TextAttributesKey[]{BOOLEAN};
     private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
     private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
+    private static final TextAttributesKey[] OPTION_KEYS = new TextAttributesKey[]{OPTION};
     private static final TextAttributesKey[] EXTENSION_KEYS = new TextAttributesKey[]{EXTENSION};
     private static final TextAttributesKey[] IDENT_KEYS = new TextAttributesKey[]{IDENT};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
@@ -64,11 +66,14 @@ public class RONSyntaxHighlighter extends SyntaxHighlighterBase {
         else if (tokenType.equals(RONTypes.BOOLEAN)) {
             return BOOLEAN_KEYS;
         }
-        else if (tokenType.equals(RONTypes.UNSIGNED) || tokenType.equals(RONTypes.SIGNED) || tokenType.equals(RONTypes.FLOAT)) {
+        else if (tokenType.equals(RONTypes.INTEGER)|| tokenType.equals(RONTypes.FLOAT)) {
             return NUMBER_KEYS;
         }
         else if (tokenType.equals(RONTypes.STRING) || tokenType.equals(RONTypes.RAW_STRING)) {
             return STRING_KEYS;
+        }
+        else if (tokenType.equals(RONTypes.SOME)) {
+            return OPTION_KEYS;
         }
         else if (tokenType.equals(RONTypes.EXTENSION)) {
             return EXTENSION_KEYS;

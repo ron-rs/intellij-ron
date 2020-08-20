@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.jonahhenriksson'
-version '1.0'
+version '1.1'
 
 sourceSets.main.java.srcDirs 'src/main/gen'
 
@@ -20,7 +20,7 @@ intellij {
     version '2020.2'
 }
 patchPluginXml {
-    changeNotes """Fixed identifiers and extensions to include underscores and lists and maps"""
+    changeNotes """Stabilized the plugin, so issues with recognizing types should be gone"""
 }
 
 publishPlugin {

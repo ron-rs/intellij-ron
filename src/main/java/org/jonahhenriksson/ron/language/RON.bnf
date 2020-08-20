@@ -22,15 +22,12 @@
 
         IDENT = "regexp:[A-Za-z_]+"
 
-        UNSIGNED = "regexp:(0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)"
-        SIGNED = "regexp:[+-](0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*)"
+        INTEGER = "regexp:[+-]?((0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*))"
         FLOAT = "regexp:([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)"
 
         CHAR = "regexp:'([ -&(-\[\]-~])|(\\')|(\\\\)'"
-        STRING = "regexp:\"([ !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\""
-        RAW_STRING = "regexp:r#\"([\s !#-\[\]-~]|(\\(\"|\\|b|f|n|r|t|(u[A-Fa-f0-9]{4}))))*\"#"
-
-        SOME = "Some"
+        STRING = "regexp:\"([^\r\n\"]|(\\[^ ]))*\""
+        RAW_STRING = "regexp:r#\"([^\"]|(\\[^ ]))*\"#"
 
         EXTENSION = "regexp:#!\[enable\([A-Za-z_]+\)\]"
         PARENTHESISL = "("
@@ -48,16 +45,17 @@
 // RON File
 RON ::= [extension+] value;
 
+// Extension
 private extension ::= EXTENSION;
 
-private value ::= string | char | bool | struct | tuple | map | list | enum | option | unsigned | signed | float;
+// Values
+private value ::= bool | integer | float | string | char | option | list | map | named_field | object;
 
 // Bool
 private bool ::= BOOLEAN;
 
 // Integer
-private unsigned ::= UNSIGNED;
-private signed ::= SIGNED;
+private integer ::= INTEGER;
 
 // Float
 private float ::= FLOAT;
@@ -74,16 +72,12 @@ private option ::= SOME PARENTHESISL value PARENTHESISR;
 // List
 private list ::= BRACKETL [value (COMMA value)* [COMMA]] BRACKETR;
 
-// Enum
-private enum ::= IDENT tuple;
-
-// Tuple
-private tuple ::= PARENTHESISL [value (COMMA value)*] PARENTHESISR;
-
 // Map
 private map ::= BRACEL [map_entry (COMMA map_entry)*  [COMMA]] BRACER
 private map_entry ::= value COLON value;
 
-// Struct + Enum
-private struct ::= [IDENT] PARENTHESISL [named_field (COMMA named_field)* [COMMA]] PARENTHESISR | IDENT | PARENTHESISL PARENTHESISR;
+// Tuple + Enum Tuple + Tuple Struct + Struct + Unit Struct + Named Enum
+private object ::= [IDENT] PARENTHESISL [value (COMMA value)* [COMMA]] PARENTHESISR | PARENTHESISL PARENTHESISR | IDENT;
+
+// Named Field for Struct
 private named_field ::= IDENT COLON value;
