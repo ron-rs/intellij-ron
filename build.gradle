@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.jonahhenriksson'
-version '1.1'
+version '1.2'
 
 sourceSets.main.java.srcDirs 'src/main/gen'
 
@@ -20,7 +20,7 @@ intellij {
     version '2020.2'
 }
 patchPluginXml {
-    changeNotes """Stabilized the plugin, so issues with recognizing types should be gone"""
+    changeNotes """Added the new file action, creating RON files is easy from the context menu"""
 }
 
 publishPlugin {
