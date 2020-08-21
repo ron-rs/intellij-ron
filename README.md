@@ -1,4 +1,4 @@
-# RONLangPlugin
+# intellij-ron
 [![Marketplace](https://img.shields.io/static/v1?label=&message=Marketplace&labelColor=FFF&color=000&logo=intellij-idea&logoColor=000)](https://plugins.jetbrains.com/plugin/14897-ron/)
 
 A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
@@ -21,3 +21,6 @@ If you want to add a feature or resolve an issue, first let me know by replying 
 Requires Intellij IDEA, Gradle CLI and the plugins Grammar-Kit, PsiViewer, and Plugin DevKit.
 
 To build, run the command `gradle buildPlugin`, and the zipped plugin will be generated in build/distributions
+
+## License
+intellij-ron is dual-licensed under Apache-2 and MIT.
