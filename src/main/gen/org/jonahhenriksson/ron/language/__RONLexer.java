@@ -2,12 +2,10 @@
 
 package org.jonahhenriksson.ron.language;
 
-import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static org.jonahhenriksson.ron.language.psi.RONTypes.*;
 
 
 /**

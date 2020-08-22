@@ -1,14 +1,11 @@
-package org.jonahhenriksson.ron.language;
+package org.ron_rs.intellij_ron.language;
 
 import com.intellij.ide.actions.CreateFileFromTemplateAction;
 import com.intellij.ide.actions.CreateFileFromTemplateDialog;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.NlsActions;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.psi.PsiDirectory;
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
 
 public class RONCreateFile extends CreateFileFromTemplateAction {
 

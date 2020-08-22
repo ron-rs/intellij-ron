@@ -1,7 +1,7 @@
 <idea-plugin>
-    <id>org.jonahhenriksson.ron</id>
+    <id>org.ron_rs.intellij_ron</id>
     <name>RON</name>
-    <vendor>Jonah Henriksson</vendor>
+    <vendor>ron_rs</vendor>
 
     <description><![CDATA[
     Currently adds highlighting support for the RON (Rust Object Notation) data format.
@@ -10,13 +10,13 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="RON file" implementationClass="org.jonahhenriksson.ron.language.RONFileType" fieldName="INSTANCE" language="RON" extensions="ron" />
-        <lang.parserDefinition language="RON" implementationClass="org.jonahhenriksson.ron.language.RONParserDefinition"/>
-        <lang.syntaxHighlighter language="RON" implementationClass="org.jonahhenriksson.ron.language.RONSyntaxHighlighter"/>
+        <fileType name="RON file" implementationClass="org.ron_rs.intellij_ron.language.RONFileType" fieldName="INSTANCE" language="RON" extensions="ron" />
+        <lang.parserDefinition language="RON" implementationClass="org.ron_rs.intellij_ron.language.RONParserDefinition"/>
+        <lang.syntaxHighlighter language="RON" implementationClass="org.ron_rs.intellij_ron.language.RONSyntaxHighlighter"/>
     </extensions>
     <actions>
-        <action id="org.jonahhenriksson.ron.language.RONCreateFile"
-                class="org.jonahhenriksson.ron.language.RONCreateFile" text="RON File"
+        <action id="org.ron_rs.intellij_ron.language.RONCreateFile"
+                class="org.ron_rs.intellij_ron.language.RONCreateFile" text="RON File"
                 description="Create new RON file">
             <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
         </action>

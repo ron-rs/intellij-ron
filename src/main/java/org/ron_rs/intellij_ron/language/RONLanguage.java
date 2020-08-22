@@ -1,4 +1,4 @@
-package org.jonahhenriksson.ron.language;
+package org.ron_rs.intellij_ron.language;
 
 import com.intellij.lang.Language;
 

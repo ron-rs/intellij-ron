@@ -1,12 +1,11 @@
-package org.jonahhenriksson.ron.language.psi;
+package org.ron_rs.intellij_ron.language.psi;
 
 import com.intellij.extapi.psi.PsiFileBase;
-import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
-import org.jonahhenriksson.ron.language.RONFileType;
-import org.jonahhenriksson.ron.language.RONLanguage;
+import org.ron_rs.intellij_ron.language.RONFileType;
+import org.ron_rs.intellij_ron.language.RONLanguage;
 
 public class RONFile extends PsiFileBase {
     public RONFile(@NotNull FileViewProvider viewProvider) {

@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.4.21'
 }
 
-group 'org.jonahhenriksson'
+group 'org.ron-rs'
 version '1.3'
 
 sourceSets.main.java.srcDirs 'src/main/gen'

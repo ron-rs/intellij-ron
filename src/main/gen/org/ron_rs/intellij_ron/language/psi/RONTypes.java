@@ -1,5 +1,5 @@
 // This is a generated file. Not intended for manual editing.
-package org.jonahhenriksson.ron.language.psi;
+package org.ron_rs.intellij_ron.language.psi;
 
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
