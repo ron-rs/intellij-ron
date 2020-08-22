@@ -81,7 +81,7 @@ public class RONSyntaxHighlighter extends SyntaxHighlighterBase {
         else if (tokenType.equals(RONTypes.IDENT)) {
             return IDENT_KEYS;
         }
-        else if (tokenType.equals(RONTypes.COMMENT)) {
+        else if (tokenType.equals(RONTypes.COMMENT) || tokenType.equals(RONTypes.BLOCK_COMMENT)) {
             return COMMENT_KEYS;
         }
         else if (tokenType.equals(TokenType.BAD_CHARACTER)) {

@@ -18,8 +18,7 @@ import org.jonahhenriksson.ron.language.psi.RONFile;
 import org.jonahhenriksson.ron.language.psi.RONTypes;
 
 public class RONParserDefinition implements ParserDefinition {
-    public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
-    public static final TokenSet COMMENTS = TokenSet.create(RONTypes.COMMENT);
+    public static final TokenSet COMMENTS = TokenSet.create(RONTypes.COMMENT, RONTypes.BLOCK_COMMENT);
     public static final TokenSet STRING_LITERALS = TokenSet.create(RONTypes.STRING);
 
     public static final IFileElementType FILE = new IFileElementType(RONLanguage.INSTANCE);

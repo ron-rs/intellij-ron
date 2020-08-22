@@ -35,9 +35,6 @@ public interface RONValue extends PsiElement {
   PsiElement getInteger();
 
   @Nullable
-  PsiElement getRawString();
-
-  @Nullable
   PsiElement getString();
 
 }

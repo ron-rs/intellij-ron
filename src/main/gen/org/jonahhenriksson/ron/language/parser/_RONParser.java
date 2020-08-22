@@ -352,19 +352,18 @@ public class _RONParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // RAW_STRING
-  static boolean raw_string(PsiBuilder b, int l) {
-    return consumeToken(b, RAW_STRING);
-  }
-
-  /* ********************************************************** */
-  // STRING
+  // STRING | RAW_STRING
   static boolean string(PsiBuilder b, int l) {
-    return consumeToken(b, STRING);
+    if (!recursion_guard_(b, l, "string")) return false;
+    if (!nextTokenIs(b, "", RAW_STRING, STRING)) return false;
+    boolean r;
+    r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, RAW_STRING);
+    return r;
   }
 
   /* ********************************************************** */
-  // bool | integer | float | raw_string | string | char | option | list | map | named_field | object
+  // bool | integer | float | string | char | option | list | map | named_field | object
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
@@ -372,7 +371,6 @@ public class _RONParser implements PsiParser, LightPsiParser {
     r = bool(b, l + 1);
     if (!r) r = integer(b, l + 1);
     if (!r) r = float_$(b, l + 1);
-    if (!r) r = raw_string(b, l + 1);
     if (!r) r = string(b, l + 1);
     if (!r) r = char_$(b, l + 1);
     if (!r) r = option(b, l + 1);

@@ -31,6 +31,15 @@ import static org.jonahhenriksson.ron.language.psi.RONTypes.*;
 
     return RAW_STRING;
   }
+
+  IElementType imbueBlockComment() {
+    yybegin(YYINITIAL);
+
+    zzStartRead = zzPostponedMarkedPos;
+    zzPostponedMarkedPos = -1;
+
+    return BLOCK_COMMENT;
+  }
 %}
 
 %public
@@ -42,12 +51,13 @@ import static org.jonahhenriksson.ron.language.psi.RONTypes.*;
 %s IN_RAW_STRING
 %s IN_RAW_STRING_SUFFIX
 
+%s IN_BLOCK_COMMENT
+
 %unicode
 
 EOL=\R
 WHITE_SPACE=\s+
 
-COMMENT="//".*
 BOOLEAN=true|false
 IDENT=[A-Za-z_]+
 INTEGER=[+-]?((0x[0-9A-Fa-f][0-9A-Fa-f_]*)|((0[bo]?)?[0-9][0-9_]*))
@@ -55,11 +65,10 @@ FLOAT=([+-]?[0-9]+\.[0-9]*([Ee][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
 CHAR='([ -&(-\[\]-~])|(\')|(\\\\)'
 STRING=\"([^\r\n\"]|(\\[\S]))*\"
 EXTENSION=#!\[enable\([A-Za-z_]+\)\]
+COMMENT="//".*
 
 %%
 <YYINITIAL> {
-  {WHITE_SPACE}      { return WHITE_SPACE; }
-
   "("                { return PARENTHESISL; }
   ")"                { return PARENTHESISR; }
   "["                { return BRACKETL; }
@@ -76,7 +85,6 @@ EXTENSION=#!\[enable\([A-Za-z_]+\)\]
                         zzShaStride = yylength() - 2;
                      }
 
-  {COMMENT}          { return COMMENT; }
   {BOOLEAN}          { return BOOLEAN; }
   {IDENT}            { return IDENT; }
   {INTEGER}          { return INTEGER; }
@@ -84,27 +92,30 @@ EXTENSION=#!\[enable\([A-Za-z_]+\)\]
   {CHAR}             { return CHAR; }
   {STRING}           { return STRING; }
   {EXTENSION}        { return EXTENSION; }
+  {COMMENT}          { return COMMENT; }
+  "/*"               {
+                       yybegin(IN_BLOCK_COMMENT);
+                       yypushback(2);
+                     }
 
+  {WHITE_SPACE}      { return WHITE_SPACE; }
 }
 
 <IN_RAW_STRING> {
-  \" #* {
-    int shaExcess = yylength() - 1 - zzShaStride;
-    if (shaExcess >= 0) {
-      yybegin(IN_RAW_STRING_SUFFIX);
-      yypushback(shaExcess);
-    }
-  }
-
-  [^] { }
-  <<EOF>>   {
-    return imbueRawLiteral();
-  }
+  \" #* { int shaExcess = yylength() - 1 - zzShaStride; if (shaExcess >= 0) { yybegin(IN_RAW_STRING_SUFFIX); yypushback(shaExcess); } }
+  [^]       { }
+  <<EOF>>   { return imbueRawLiteral(); }
 }
 
 <IN_RAW_STRING_SUFFIX> {
   [^]       { yypushback(1); return imbueRawLiteral(); }
   <<EOF>>   { return imbueRawLiteral(); }
+}
+
+<IN_BLOCK_COMMENT> {
+  "*/"      { return imbueBlockComment(); }
+  <<EOF>>   { return imbueBlockComment(); }
+  [^]       { }
 }
 
 [^] { return BAD_CHARACTER; }

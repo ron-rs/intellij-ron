@@ -17,6 +17,7 @@ public interface RONTypes {
   IElementType OPTION = new RONElementType("OPTION");
   IElementType VALUE = new RONElementType("VALUE");
 
+  IElementType BLOCK_COMMENT = new RONTokenType("BLOCK COMMENT");
   IElementType BOOLEAN = new RONTokenType("BOOLEAN");
   IElementType BRACEL = new RONTokenType("{");
   IElementType BRACER = new RONTokenType("}");
@@ -32,7 +33,7 @@ public interface RONTypes {
   IElementType INTEGER = new RONTokenType("INTEGER");
   IElementType PARENTHESISL = new RONTokenType("(");
   IElementType PARENTHESISR = new RONTokenType(")");
-  IElementType RAW_STRING = new RONTokenType("RAW_STRING");
+  IElementType RAW_STRING = new RONTokenType("RAW STRING");
   IElementType SOME = new RONTokenType("Some");
   IElementType STRING = new RONTokenType("STRING");
 

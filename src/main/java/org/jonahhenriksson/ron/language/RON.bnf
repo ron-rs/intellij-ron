@@ -17,6 +17,7 @@
 
     tokens = [
         COMMENT = "regexp://.*"
+        BLOCK_COMMENT = "BLOCK COMMENT"
 
         BOOLEAN = "regexp:true|false"
 
@@ -27,6 +28,7 @@
 
         CHAR = "regexp:'([ -&(-\[\]-~])|(\\')|(\\\\)'"
         STRING = "regexp:\"([^\r\n\"]|(\\[\S]))*\""
+        RAW_STRING = "RAW STRING"
 
         EXTENSION = "regexp:#!\[enable\([A-Za-z_]+\)\]"
         PARENTHESISL = "("
