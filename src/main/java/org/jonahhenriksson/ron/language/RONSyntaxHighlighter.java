@@ -1,4 +1,4 @@
-package org.ron_rs.intellij_ron.language;
+package org.jonahhenriksson.ron.language;
 
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
-import org.ron_rs.intellij_ron.language.psi.RONTypes;
+import org.jonahhenriksson.ron.language.psi.RONTypes;
 
 public class RONSyntaxHighlighter extends SyntaxHighlighterBase {
 

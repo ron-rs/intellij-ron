@@ -1,4 +1,4 @@
-package org.ron_rs.intellij_ron.language;
+package org.jonahhenriksson.ron.language;
 
 import com.intellij.lexer.FlexAdapter;
 

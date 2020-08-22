@@ -1,4 +1,4 @@
-package org.ron_rs.intellij_ron.language;
+package org.jonahhenriksson.ron.language;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
@@ -8,12 +8,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.ron_rs.intellij_ron.language.parser._RONParser;
-import org.ron_rs.intellij_ron.language.psi.RONTypes;
-import org.ron_rs.intellij_ron.language.psi.RONFile;
+import org.jonahhenriksson.ron.language.parser._RONParser;
+import org.jonahhenriksson.ron.language.psi.RONElementType;
+import org.jonahhenriksson.ron.language.psi.RONFile;
+import org.jonahhenriksson.ron.language.psi.RONTypes;
 
 public class RONParserDefinition implements ParserDefinition {
     public static final TokenSet COMMENTS = TokenSet.create(RONTypes.COMMENT, RONTypes.BLOCK_COMMENT);

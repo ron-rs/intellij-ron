@@ -1,9 +1,9 @@
-package org.ron_rs.intellij_ron.language.psi;
+package org.jonahhenriksson.ron.language.psi;
 
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.ron_rs.intellij_ron.language.RONLanguage;
+import org.jonahhenriksson.ron.language.RONLanguage;
 
 public class RONElementType extends IElementType {
 

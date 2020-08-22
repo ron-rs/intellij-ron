@@ -1,10 +1,10 @@
 // This is a generated file. Not intended for manual editing.
-package org.ron_rs.intellij_ron.language.parser;
+package org.jonahhenriksson.ron.language.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import static org.ron_rs.intellij_ron.language.psi.RONTypes.*;
-import static org.ron_rs.intellij_ron.language.psi.RONParserUtil.*;
+import static org.jonahhenriksson.ron.language.psi.RONTypes.*;
+import static org.jonahhenriksson.ron.language.psi.RONParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;

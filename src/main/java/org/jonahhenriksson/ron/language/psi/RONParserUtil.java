@@ -1,4 +1,4 @@
-package org.ron_rs.intellij_ron.language.psi;
+package org.jonahhenriksson.ron.language.psi;
 
 import com.intellij.lang.parser.GeneratedParserUtilBase;
 

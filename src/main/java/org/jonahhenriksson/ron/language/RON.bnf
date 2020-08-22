@@ -1,6 +1,6 @@
 {
-    parserClass = "org.ron_rs.intellij_ron.language.parser._RONParser"
-    parserUtilClass = "org.ron_rs.intellij_ron.language.psi.RONParserUtil"
+    parserClass = "org.jonahhenriksson.ron.language.parser._RONParser"
+    parserUtilClass = "org.jonahhenriksson.ron.language.psi.RONParserUtil"
 
     extends = "com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -9,9 +9,9 @@
     psiPackage = "org.jonahhenriksson.ron.language.psi"
     psiImplPackage = "org.jonahhenriksson.ron.language.psi.impl"
 
-    elementTypeHolderClass = "org.ron_rs.intellij_ron.language.psi.RONTypes"
-    elementTypeClass = "org.ron_rs.intellij_ron.language.psi.RONElementType"
-    tokenTypeClass = "org.ron_rs.intellij_ron.language.psi.RONTokenType"
+    elementTypeHolderClass = "org.jonahhenriksson.ron.language.psi.RONTypes"
+    elementTypeClass = "org.jonahhenriksson.ron.language.psi.RONElementType"
+    tokenTypeClass = "org.jonahhenriksson.ron.language.psi.RONTokenType"
 
     psiImplUtilClass = "org.jonahhenriksson.ron.language.psi.impl.RONPsiImplUtil"
 
