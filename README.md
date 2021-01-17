@@ -4,6 +4,8 @@
 A plugin that adds RON (Rusty Object Notation) support to IntelliJ IDEA
 
 ## Versions
+1.4 - Updated to support 2020.3 edition of Intellij IDEs
+
 1.3 - Adds support for block comments and cleaned up some code
 
 1.2 - Adds context menu option for creating RON files
